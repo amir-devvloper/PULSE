@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Dashboard — PULSE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="theme.css">
+    <meta name="theme-color" content="#04060a">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+
+            <a href="dashboard.html" class="brand">PULSE</a>
+
+            <div class="nav-links">
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="monitors.html">Monitors</a>
+                <a href="incidents.html">Incidents</a>
+                <a href="analytics.html">Analytics</a>
+                <a href="settings.html">Settings</a>
+            </div>
+            <div class="nav-auth">
+                <button id="logout-btn" class="btn btn-ghost">Log out</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="app-main">
+        <div class="container">
+
+            <section class="page-head">
+                <div>
+                    <h1 id="greeting">Welcome</h1>
+                    <p>Here's what's happening with your services.</p>
+                </div>
+            </section>
+
+            <section class="section-block">
+                <div class="metric-grid">
+
+                    <article class="card metric-card">
+                        <span class="metric-label">Total Monitors</span>
+                        <strong class="metric-value">—</strong>
+                    </article>
+
+                    <article class="card metric-card">
+                        <span class="metric-label">Online</span>
+                        <strong class="metric-value is-success">—</strong>
+                    </article>
+
+                    <article class="card metric-card">
+                        <span class="metric-label">Down</span>
+                        <strong class="metric-value is-danger">—</strong>
+                    </article>
+
+                    <article class="card metric-card">
+                        <span class="metric-label">Uptime</span>
+                        <strong class="metric-value">—</strong>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section-block">
+                <div class="subsection-head">
+                    <h2>Your Monitors</h2>
+                    <a href="monitors.html" class="link">View all</a>
+                </div>
+
+                <div class="monitor-list">
+                    <p>Loading…</p>
+                </div>
+            </section>
+
+            <section class="section-block">
+                <div class="subsection-head">
+                    <h2>Recent Incidents</h2>
+                </div>
+
+                <div class="incident-list">
+                    <p>Loading…</p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script type="module" src="app-auth.js"></script>
+    <script src="ui.js"></script>
+    <script src="dashboard.js"></script>
+    <script src="motion.js" defer></script>
+</body>
+</html>

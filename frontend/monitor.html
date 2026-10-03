@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+    <title>Add Monitor — PULSE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="theme.css">
+    <meta name="theme-color" content="#04060a">
+</head>
+
+<body>
+
+    <header class="site-header">
+
+        <nav class="navbar">
+
+            <a href="dashboard.html" class="brand">
+                PULSE
+            </a>
+
+            <div class="nav-links">
+
+                <a href="dashboard.html">Dashboard</a>
+                <a href="monitors.html" class="active">Monitors</a>
+                <a href="incidents.html">Incidents</a>
+                <a href="analytics.html">Analytics</a>
+                <a href="settings.html">Settings</a>
+
+            </div>
+            <div class="nav-auth">
+                <button id="logout-btn" class="btn btn-ghost">Log out</button>
+            </div>
+        </nav>
+
+    </header>
+
+
+    <main class="app-main">
+      <div class="container" style="max-width: 640px;">
+
+        <section class="page-head" style="display:block;">
+
+            <h1>Create Monitor</h1>
+
+            <p>
+                Tell PULSE what you want to monitor.
+            </p>
+
+        </section>
+
+
+        <section class="card" style="padding: 28px 28px 8px;">
+
+            <form>
+
+                <!-- Monitor Name -->
+
+                <div class="field">
+
+                    <label for="monitorName">
+                        Monitor Name
+                    </label>
+
+                    <input
+                        class="input"
+                        type="text"
+                        id="monitorName"
+                        name="monitorName"
+                        placeholder="My API"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- URL -->
+
+                <div class="field">
+
+                    <label for="url">
+                        URL
+                    </label>
+
+                    <input
+                        class="input"
+                        type="url"
+                        id="url"
+                        name="url"
+                        placeholder="https://api.example.com/health"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- HTTP Method -->
+
+                <div class="field">
+
+                    <label for="method">
+                        HTTP Method
+                    </label>
+
+                    <select class="input" id="method" name="method">
+
+                        <option value="GET">
+                            GET
+                        </option>
+
+                        <option value="POST">
+                            POST
+                        </option>
+
+                        <option value="HEAD">
+                            HEAD
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Check Interval -->
+
+                <div class="field">
+
+                    <label for="interval">
+                        Check Interval
+                    </label>
+
+                    <select class="input" id="interval" name="interval">
+
+                        <option value="60">
+                            Every 1 minute
+                        </option>
+
+                        <option value="300">
+                            Every 5 minutes
+                        </option>
+
+                        <option value="600">
+                            Every 10 minutes
+                        </option>
+
+                        <option value="1800">
+                            Every 30 minutes
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Expected Status -->
+
+                <div class="field">
+
+                    <label for="expectedStatus">
+                        Expected Status Code
+                    </label>
+
+                    <input
+                        class="input"
+                        type="number"
+                        id="expectedStatus"
+                        name="expectedStatus"
+                        value="200"
+                        min="100"
+                        max="599"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Timeout -->
+
+                <div class="field">
+
+                    <label for="timeout">
+                        Timeout
+                    </label>
+
+                    <select class="input" id="timeout" name="timeout">
+
+                        <option value="5000">
+                            5 seconds
+                        </option>
+
+                        <option value="10000">
+                            10 seconds
+                        </option>
+
+                        <option value="30000">
+                            30 seconds
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button type="submit" class="btn btn-primary">
+                        Create Monitor
+                    </button>
+
+                    <a href="monitors.html" class="btn btn-secondary">
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </section>
+
+      </div>
+    </main>
+
+    <script src="monitor.js"></script>
+
+    <script type="module" src="app-auth.js"></script>
+    <script src="motion.js" defer></script>
+</body>
+
+</html>

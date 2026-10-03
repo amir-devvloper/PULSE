@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Settings — PULSE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="theme.css">
+    <meta name="theme-color" content="#04060a">
+</head>
+<body>
+
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="dashboard.html" class="brand">PULSE</a>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="monitors.html">Monitors</a>
+                <a href="incidents.html">Incidents</a>
+                <a href="analytics.html">Analytics</a>
+                <a href="settings.html" class="active">Settings</a>
+            </div>
+            <div class="nav-auth">
+                <button id="logout-btn" class="btn btn-ghost">Log out</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="app-main">
+        <div class="container" style="max-width: 720px;">
+
+            <section class="page-head">
+                <div>
+                    <h1>Settings</h1>
+                    <p>Manage your account and monitoring preferences.</p>
+                </div>
+            </section>
+
+            <div class="settings-grid">
+
+                <section class="card settings-card">
+                    <h3>Account</h3>
+                    <p class="card-desc">Your profile information.</p>
+
+                    <div class="field">
+                        <label for="settingsName">Name</label>
+                        <input class="input" type="text" id="settingsName" name="settingsName" placeholder="Your name">
+                    </div>
+
+                    <div class="field">
+                        <label for="settingsEmail">Email</label>
+                        <input class="input" type="email" id="settingsEmail" name="settingsEmail" placeholder="you@example.com">
+                    </div>
+
+                    <p id="settings-msg" class="form-alert"></p>
+                    <button type="button" id="save-account" class="btn btn-primary">Save Changes</button>
+                </section>
+
+                <section class="card settings-card">
+                    <h3>Notifications</h3>
+                    <p class="card-desc" id="notif-desc">Choose which emails PULSE sends you.</p>
+
+                    <div class="settings-row">
+                        <div>
+                            <div class="settings-row-label">Email alerts</div>
+                            <div class="settings-row-desc">Get an email when a monitor goes down and when it recovers.</div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="alerts-toggle">
+                            <span class="switch-track"></span>
+                        </label>
+                    </div>
+
+                    <div class="settings-row">
+                        <div>
+                            <div class="settings-row-label">Incident summaries</div>
+                            <div class="settings-row-desc">Weekly digest of uptime and incidents.</div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="digest-toggle">
+                            <span class="switch-track"></span>
+                        </label>
+                    </div>
+
+                    <p id="notif-msg" class="form-alert"></p>
+                    <div id="notif-history"></div>
+                </section>
+
+                <section class="card settings-card">
+                    <h3>Password</h3>
+                    <p class="card-desc">Use at least 8 characters.</p>
+
+                    <div class="field">
+                        <label for="currentPassword">Current password</label>
+                        <input class="input" type="password" id="currentPassword" autocomplete="current-password">
+                    </div>
+
+                    <div class="field">
+                        <label for="newPassword">New password</label>
+                        <input class="input" type="password" id="newPassword" autocomplete="new-password">
+                    </div>
+
+                    <p id="password-msg" class="form-alert"></p>
+                    <button type="button" id="save-password" class="btn btn-primary">Change Password</button>
+                </section>
+
+                <section class="card settings-card">
+                    <h3>Appearance</h3>
+                    <p class="card-desc">Display preferences for the dashboard.</p>
+
+                    <div class="settings-row">
+                        <div>
+                            <div class="settings-row-label">Compact monitor cards</div>
+                            <div class="settings-row-desc">Show more monitors per screen.</div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="compact-toggle">
+                            <span class="switch-track"></span>
+                        </label>
+                    </div>
+                </section>
+
+                <section class="card settings-card">
+                    <h3>Delete account</h3>
+                    <p class="card-desc">Permanently removes your account, monitors, checks and incidents. This can't be undone.</p>
+
+                    <div class="field">
+                        <label for="deletePassword">Confirm with your password</label>
+                        <input class="input" type="password" id="deletePassword" autocomplete="current-password">
+                    </div>
+
+                    <p id="delete-msg" class="form-alert"></p>
+                    <button type="button" id="delete-account" class="btn btn-secondary">Delete my account</button>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="app-auth.js"></script>
+    <script src="ui.js"></script>
+    <script src="settings.js"></script>
+    <script src="motion.js" defer></script>
+</body>
+</html>

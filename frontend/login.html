@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Login — PULSE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="theme.css">
+    <meta name="theme-color" content="#04060a">
+</head>
+<body>
+
+    <main class="auth-shell">
+
+        <section class="card auth-card">
+
+            <a href="index.html" class="auth-back">← PULSE</a>
+            <h1>Welcome back</h1>
+
+            <p>Sign in to your PULSE account.</p>
+
+            <p id="form-error" class="form-alert"></p>
+
+            <form id="login-form">
+
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input
+                        class="input"
+                        type="text"
+                        id="email"
+                        name="email"
+                        placeholder="you@example.com"
+                        required>
+                </div>
+
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input
+                        class="input"
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="••••••••"
+                        required>
+                </div>
+
+                <p class="auth-foot" style="text-align: right; margin: 0 0 12px;">
+                    <a href="forgot-password.html" class="link">Forgot password?</a>
+                </p>
+
+                <button type="submit" class="btn btn-primary btn-block">
+                    Sign In
+                </button>
+            </form>
+
+            <p class="auth-foot">
+                Don't have an account? <a href="signup.html" class="link">Create one</a>
+            </p>
+        </section>
+    </main>
+
+    <script type="module" src="login.js"></script>
+
+    <script src="motion.js" defer></script>
+</body>
+</html>

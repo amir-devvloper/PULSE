@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Analytics — PULSE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="theme.css">
+    <meta name="theme-color" content="#04060a">
+</head>
+<body>
+
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="dashboard.html" class="brand">PULSE</a>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="monitors.html">Monitors</a>
+                <a href="incidents.html">Incidents</a>
+                <a href="analytics.html" class="active">Analytics</a>
+                <a href="settings.html">Settings</a>
+            </div>
+            <div class="nav-auth">
+                <button id="logout-btn" class="btn btn-ghost">Log out</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="app-main">
+        <div class="container">
+
+            <section class="page-head">
+                <div>
+                    <h1>Analytics</h1>
+                    <p>Historical uptime and response time across your monitors.</p>
+                </div>
+
+                <div class="time-range">
+                    <button type="button" class="active" data-hours="24">24h</button>
+                    <button type="button" data-hours="168">7d</button>
+                    <button type="button" data-hours="720">30d</button>
+                </div>
+            </section>
+
+            <section class="section-block">
+                <div class="metric-grid">
+                    <article class="card metric-card">
+                        <span class="metric-label">Avg Uptime</span>
+                        <strong class="metric-value">—</strong>
+                        <span class="metric-sub">&nbsp;</span>
+                    </article>
+                    <article class="card metric-card">
+                        <span class="metric-label">Avg Response</span>
+                        <strong class="metric-value">—</strong>
+                        <span class="metric-sub">&nbsp;</span>
+                    </article>
+                    <article class="card metric-card">
+                        <span class="metric-label">Incidents</span>
+                        <strong class="metric-value">—</strong>
+                        <span class="metric-sub">&nbsp;</span>
+                    </article>
+                    <article class="card metric-card">
+                        <span class="metric-label">Checks Run</span>
+                        <strong class="metric-value">—</strong>
+                        <span class="metric-sub">&nbsp;</span>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section-block">
+                <div class="subsection-head">
+                    <h2>Response Time</h2>
+                </div>
+                <div class="card chart-box" id="chart-response"></div>
+            </section>
+
+            <section class="section-block">
+                <div class="subsection-head">
+                    <h2>Uptime</h2>
+                </div>
+                <div class="card chart-box" id="chart-uptime"></div>
+            </section>
+
+        </div>
+    </main>
+
+    <script type="module" src="app-auth.js"></script>
+    <script src="ui.js"></script>
+    <script src="analytics.js"></script>
+    <script src="motion.js" defer></script>
+</body>
+</html>

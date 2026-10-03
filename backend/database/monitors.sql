@@ -1,0 +1,25 @@
+CREATE TABLE IF NOT EXISTS monitors (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+
+    name TEXT NOT NULL,
+
+    url TEXT NOT NULL,
+
+    method TEXT NOT NULL DEFAULT 'GET',
+
+    interval_seconds INTEGER NOT NULL DEFAULT 60,
+
+    expected_status INTEGER NOT NULL DEFAULT 200,
+
+    timeout_ms INTEGER NOT NULL DEFAULT 5000,
+
+    is_active INTEGER NOT NULL DEFAULT 1,
+
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_monitors_user_id ON monitors(user_id);
