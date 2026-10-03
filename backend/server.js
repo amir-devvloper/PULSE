@@ -13,7 +13,9 @@ const { startMonitorWorker } = await import('./workers/monitorWorker.js');
 initDb();
 
 const PORT = process.env.PORT || 3000;
-createApp().listen(PORT, () => {
+
+createApp().listen(PORT, '0.0.0.0', () => {
     console.log(`PULSE running at http://localhost:${PORT}`);
     startMonitorWorker();
 });
+
