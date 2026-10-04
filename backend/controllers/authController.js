@@ -117,9 +117,20 @@ export function forgotPasswordHandler(req, res) {
     if (!email || !EMAIL_RE.test(String(email).trim())) {
         return res.status(400).json({ error: 'Enter a valid email address.' });
     }
-    const user = db.prepare('SELECT id, name, email FROM users WHERE email = ?').get(String(email).trim().toLowerCase());
-    // Respond identically whether or not the account exists, and don't wait for the email.
-    if (user) sendResetEmail(user).catch(e => logger.error('Reset email failed:', e.message));
+
+    const normalizedEmail = String(email).trim().toLowerCase();
+    const user = db.prepare('SELECT id, name, email FROM users WHERE email = ?').get(normalizedEmail);
+
+    // Keep the response generic to avoid leaking whether an account exists.
+    // Log enough server-side detail to diagnose delivery problems in production.
+    logger.info(`Password reset requested for ${normalizedEmail}; accountFound=${Boolean(user)}`);
+
+    if (user) {
+        sendResetEmail(user)
+            .then(sent => logger.info(`Password reset delivery result for ${user.email}: ${sent ? 'sent' : 'skipped'}`))
+            .catch(e => logger.error(`Reset email failed for ${user.email}: ${e.message}`));
+    }
+
     res.json(GENERIC_FORGOT);
 }
 
