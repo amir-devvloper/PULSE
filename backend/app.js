@@ -14,6 +14,7 @@ import notificationsRouter from './routes/notifications.js';
 import { requireAuth, requirePageAuth } from './middleware/auth.js';
 import { rateLimit } from './middleware/rateLimit.js';
 import { notFoundApi, errorHandler } from './middleware/errorHandler.js';
+import { isMailConfigured } from './services/mailService.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const FRONTEND_DIR = path.join(__dirname, '../frontend');
@@ -45,6 +46,21 @@ export function createApp() {
 
     app.use(express.json());
     app.use(cookieParser());
+
+    app.get('/health', (req, res) => {
+        res.json({
+            ok: true,
+            smtp: {
+                configured: isMailConfigured(),
+                host: Boolean(process.env.SMTP_HOST),
+                port: Boolean(process.env.SMTP_PORT),
+                secure: Boolean(process.env.SMTP_SECURE),
+                user: Boolean(process.env.SMTP_USER),
+                pass: Boolean(process.env.SMTP_PASS),
+                from: Boolean(process.env.SMTP_FROM)
+            }
+        });
+    });
 
     app.use('/api/auth', rateLimit({ max: 30 }), authRouter);
     app.use('/api/monitors', requireAuth, monitorsRouter);
