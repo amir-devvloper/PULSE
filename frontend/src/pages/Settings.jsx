@@ -73,14 +73,14 @@ export default function Settings() {
   };
 
   const saveNotification = async (patch) => {
-    if (!n) return;
+    if (!settings) return;
     setSaving('notifications');
     try {
       await api('/notifications/settings', {
         method: 'PUT',
         body: {
-          emailAlerts: n.emailAlerts,
-          weeklyDigest: n.weeklyDigest,
+          emailAlerts: settings.emailAlerts,
+          weeklyDigest: settings.weeklyDigest,
           ...patch
         }
       });
@@ -127,6 +127,7 @@ export default function Settings() {
     }
   };
 
+  const settings = n?.settings;
   const items = history?.notifications || [];
 
   return (
@@ -153,22 +154,22 @@ export default function Settings() {
         <Card>
           <h3>Notifications</h3>
           <p className="card-desc">Choose which emails PULSE sends you.</p>
-          {n && <>
+          {settings && <>
             <Toggle
               label="Email alerts"
               description="Get notified when a monitor goes down or recovers."
-              on={n.emailAlerts}
+              on={settings.emailAlerts}
               disabled={saving === 'notifications'}
               set={v => saveNotification({ emailAlerts: v })}
             />
             <Toggle
               label="Weekly digest"
               description="Receive a weekly uptime and incident summary."
-              on={n.weeklyDigest}
+              on={settings.weeklyDigest}
               disabled={saving === 'notifications'}
               set={v => saveNotification({ weeklyDigest: v })}
             />
-            {!n.emailConfigured && (
+            {!settings.emailConfigured && (
               <p className="muted small settings-note">
                 SMTP isn't configured on the server, so emails are skipped. Add SMTP environment variables in the Render backend service to enable delivery.
               </p>
