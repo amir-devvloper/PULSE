@@ -19,6 +19,12 @@ function transport() {
 }
 
 // Throws if SMTP isn't configured or the server rejects the message.
+export async function verifyMailTransport() {
+    if (!isMailConfigured()) return { configured: false, verified: false };
+    await transport().verify();
+    return { configured: true, verified: true };
+}
+
 export async function sendMail({ to, subject, text }) {
     if (!isMailConfigured()) throw new Error('SMTP is not configured');
     await transport().sendMail({ from: process.env.SMTP_FROM || process.env.SMTP_USER, to, subject, text });
