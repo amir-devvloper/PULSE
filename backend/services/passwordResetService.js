@@ -21,7 +21,7 @@ export function createResetToken(userId) {
 
 export async function sendResetEmail(user) {
     const token = createResetToken(user.id);
-    const link = `${appUrl()}/reset-password.html?token=${token}`;
+    const link = `${appUrl()}/reset-password?token=${encodeURIComponent(token)}`;
     if (!isMailConfigured()) {
         // No way to email it. In development print the link so the flow can still be tried.
         if (process.env.NODE_ENV !== 'production') logger.warn(`SMTP not configured. Reset link for ${user.email}: ${link}`);
