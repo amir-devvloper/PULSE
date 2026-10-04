@@ -45,23 +45,60 @@ export function getSummary(userId, hours = 24) {
     };
 }
 
-// 24 evenly sized buckets across the range, oldest first. Empty buckets are omitted.
+// Build 24 evenly sized buckets in application code.
+// This avoids relying on SQLite integer-division/grouping behavior for epoch timestamps.
 export function getSeries(userId, hours = 24) {
-    const bucketSec = Math.round((hours * 3600) / 24);
-    return db.prepare(
-        `SELECT CAST(CAST(strftime('%s', c.checked_at) AS INTEGER) / ? AS INTEGER) * ? AS t,
-                COUNT(*) AS checks,
-                SUM(c.is_success) AS ok,
-                ROUND(AVG(c.response_time)) AS avg_ms
-         FROM checks c JOIN monitors m ON m.id = c.monitor_id
-         WHERE m.user_id = ? AND c.checked_at >= datetime('now', ?)
-         GROUP BY t ORDER BY t`
-    ).all(bucketSec, bucketSec, userId, `-${hours} hours`).map(r => ({
-        t: r.t,
-        checks: r.checks,
-        uptimePercent: Math.round((r.ok / r.checks) * 1000) / 10,
-        avgResponseMs: r.avg_ms
+    const seconds = hours * 3600;
+    const bucketSec = seconds / 24;
+    const since = `-${hours} hours`;
+    const rows = db.prepare(
+        `SELECT CAST(strftime('%s', c.checked_at) AS INTEGER) AS checked_ts,
+                c.response_time,
+                c.is_success
+         FROM checks c
+         JOIN monitors m ON m.id = c.monitor_id
+         WHERE m.user_id = ?
+           AND c.checked_at >= datetime('now', ?)
+         ORDER BY checked_ts ASC`
+    ).all(userId, since);
+
+    if (!rows.length) return [];
+
+    const endTs = Math.floor(Date.now() / 1000);
+    const startTs = endTs - seconds;
+    const buckets = Array.from({ length: 24 }, (_, index) => ({
+        t: startTs + Math.floor(index * bucketSec),
+        checks: 0,
+        ok: 0,
+        responseTotal: 0,
+        responseCount: 0
     }));
+
+    for (const row of rows) {
+        if (!Number.isFinite(row.checked_ts)) continue;
+        const index = Math.min(
+            23,
+            Math.max(0, Math.floor((row.checked_ts - startTs) / bucketSec))
+        );
+        const bucket = buckets[index];
+        bucket.checks += 1;
+        bucket.ok += row.is_success ? 1 : 0;
+        if (Number.isFinite(row.response_time)) {
+            bucket.responseTotal += row.response_time;
+            bucket.responseCount += 1;
+        }
+    }
+
+    return buckets
+        .filter(bucket => bucket.checks > 0)
+        .map(bucket => ({
+            t: bucket.t,
+            checks: bucket.checks,
+            uptimePercent: Math.round((bucket.ok / bucket.checks) * 1000) / 10,
+            avgResponseMs: bucket.responseCount
+                ? Math.round(bucket.responseTotal / bucket.responseCount)
+                : null
+        }));
 }
 
 // True when the last `n` checks of the monitor all failed (and at least n exist).
